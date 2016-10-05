@@ -44,6 +44,7 @@ public class Runner {
             }
             em.getTransaction().commit();
         } catch (IllegalArgumentException | TransactionRequiredException | IllegalStateException e) {
+            em.getTransaction().rollback();
             throw new TransactionRequiredException("Failed to write users to DB. Error message: " + e.getMessage());
         }
     }
