@@ -1,6 +1,7 @@
 package com.horbatiuk.data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The Contact class contains fields for storing in database for contact objects.
@@ -10,11 +11,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Contacts")
-public class Contact {
+public class Contact implements Serializable {
     /**
      * Unique id for storing objects in db. Generates by db.
-     *
-     * @author A.Horbatiuk
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,8 +21,6 @@ public class Contact {
 
     /**
      * Stores first name of contact.
-     *
-     * @author A.Horbatiuk
      */
 
     @Column(name = "firstName", nullable = false)
@@ -32,8 +29,6 @@ public class Contact {
 
     /**
      * Stores last name of contact.
-     *
-     * @author A.Horbatiuk
      */
 
     @Column(name = "lastName", nullable = false)
@@ -42,8 +37,6 @@ public class Contact {
 
     /**
      * Stores phone of contact.
-     *
-     * @author A.Horbatiuk
      */
 
     @Column(name = "phone", nullable = false)
@@ -52,8 +45,6 @@ public class Contact {
 
     /**
      * Stores age of contact.
-     *
-     * @author A.Horbatiuk
      */
 
     @Column(name = "age", nullable = false)
@@ -97,5 +88,39 @@ public class Contact {
     public Contact setAge(int age) {
         this.age = age;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone=" + phone +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+
+        if (phone != contact.phone) return false;
+        if (age != contact.age) return false;
+        if (!firstName.equals(contact.firstName)) return false;
+        return lastName.equals(contact.lastName);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + phone;
+        result = 31 * result + age;
+        return result;
     }
 }

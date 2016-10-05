@@ -7,11 +7,19 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.Random;
 
+/**
+ * Starts the program
+ *
+ * @author A.Horbatiuk
+ */
+
 public class Runner {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAUnit");
         EntityManager em = emf.createEntityManager();
         createRandomContacts(10, em);
+        em.close();
+        emf.close();
     }
 
     /**
@@ -19,8 +27,6 @@ public class Runner {
      *
      * @param number how many contacts to create
      * @param em what EntityManager to use
-     *
-     * @author  A.Horbatiuk
      */
 
     private static void createRandomContacts(int number, EntityManager em) {
