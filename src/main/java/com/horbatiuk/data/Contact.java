@@ -92,13 +92,13 @@ public class Contact implements Serializable {
 
     @Override
     public String toString() {
-        return "Contact{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone=" + phone +
-                ", age=" + age +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("id=").append(id);
+        sb.append(", firstName=").append(firstName);
+        sb.append(", lastName=").append(lastName);
+        sb.append(", phone=").append(phone);
+        sb.append(", age=").append(age);
+        return sb.toString();
     }
 
     @Override
