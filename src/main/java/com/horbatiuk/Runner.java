@@ -5,6 +5,7 @@ import com.horbatiuk.data.Contact;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TransactionRequiredException;
 import java.util.Random;
 
 /**
@@ -26,7 +27,7 @@ public class Runner {
      * Creates randomly generated contacts in DB.
      *
      * @param number how many contacts to create
-     * @param em what EntityManager to use
+     * @param em     what EntityManager to use
      */
 
     private static void createRandomContacts(int number, EntityManager em) {
@@ -42,9 +43,8 @@ public class Runner {
                 );
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            em.getTransaction().rollback();
-            return;
+        } catch (IllegalArgumentException | TransactionRequiredException | IllegalStateException e) {
+            throw new TransactionRequiredException("Failed to write users to DB. Error message: " + e.getMessage());
         }
     }
 }
